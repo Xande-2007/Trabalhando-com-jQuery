@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 4</title>
+    <script src="jquery-3.7.1.js" ></script>
+</head>
+
+<body>
+    <h1>Selecionar Personagens</h1>
+    <div class="container">
+        <h1>Escolha um Personagem</h1>
+        <div>
+            <p>
+                Jedi: <select name="selJedi" id="selJedi">
+                    <option value="#">Selecionar</option>
+                </select>
+            </p>
+            <p>
+                Sith: <select name="selSith" id="selSith">
+                    <option value="#">Selecionar</option>
+                </select>
+            </p>
+        </div>
+        <h3 id="pJedi"></h3>
+        <h3 id="pJedi"></h3>
+        <h3 id="resultado"></h3>
+    </div>
+    <button id="select">Batalhar!</button>
+    <script>
+        $('body').css('background-color: #ffff')
+        //criando o Objeto personagem:
+        function criarPersonagem(Tipo, Nome, Forca) {
+            this.Tipo = Tipo;
+            this.Nome = Nome;
+            this.Forca = new Number(Forca);
+        }
+        function definirFOR() {
+            var FOR = 0;
+            for (i = 0; i >= 3; i++) {
+                FOR = Math.floor(Math.random() * 6 + 1)
+            }
+            return FOR
+        }
+
+        //Criando o Array:
+        var allPersonagens = new Array();
+        allPersonagens.push(criarPersonagem('Jedi', 'Yoda', definirFOR()));
+        allPersonagens.push(criarPersonagem('Jedi', 'Luke', definirFOR()));
+        allPersonagens.push(criarPersonagem('Sith', 'Darth Sidious', definirFOR()));
+        allPersonagens.push(criarPersonagem('Sith', 'Darth Vader', definirFOR()));
+
+
+
+        
+        // Tentando adicionar os personagens nas opções
+        $('<option>' + allPersonagens[0].Nome + '</option>').appendTo('#selJedi').attr('value', 0);
+        $('<option>' + allPersonagens[1].Nome + '</option>').appendTo('#selJedi').attr('value', 1);
+        $('<option>' + allPersonagens[2].Nome + '</option>').appendTo('#selSith').attr('value', 2);
+        $('<option>' + allPersonagens[3].Nome + '</option>').appendTo('#selSith').attr('value', 3);
+
+
+        $('#select').click(Selecionar())
+
+            function Selecionar() {
+                var Jed= allPersonagens[$('#selJedi :selected').attr('value')];
+                var Sit = allPersonagens[$('#selSith :selected').attr('value')];
+                $('#pJedi').html(`${Jed.Nome} : ${Jed.Forca}`);
+                $('#pSith').html(`${Sit.Nome} : ${Sit.Forca}`);
+
+
+                if (Jed.Forca > Sit.Forca) {
+                    $('#resultado').html(`${Jed.Nome} venceu!`);
+                } 
+                else if (Jed.Forca < Sit.Forca) {
+                    $('#resultado').html(`${Sit.Nome} venceu!`);
+                } 
+                else {
+                    $('#resultado').html('Empate!');
+                }
+            }
+
+    </script>
+</body>
+
+</html>
